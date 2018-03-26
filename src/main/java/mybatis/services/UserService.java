@@ -29,6 +29,11 @@ public class UserService {
         return userMapper.getAllUsers();
     }
 
+    public ArrayList<User> getUserByAge(int age){
+        return userMapper.getUserByAge(age);
+    }
+
+
     //get user by id
     public User getById(int id){
         return userMapper.getByID(id);
@@ -105,4 +110,6 @@ public class UserService {
         userMapper.deleteUser(id);
         return userMapper.getByID(id);
     }
+
+
 }

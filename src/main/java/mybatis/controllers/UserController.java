@@ -25,8 +25,13 @@ public class UserController {
         return userService.getAllUsers();
     }
 
+    @RequestMapping("/age")
+    public ArrayList<User> getUsers(@RequestParam(value="age") int age) {
+        return userService.getUserByAge(age);
+    }
+
     @RequestMapping("/{id}")
-    public User getById(@PathVariable(value="id")int id) {
+    public User getById(@PathVariable(value = "id") int id) {
         return userService.getById(id);
     }
 
@@ -50,8 +55,8 @@ public class UserController {
     }
 
     //Delete
-    @RequestMapping(method= RequestMethod.DELETE, value="/")
-    public User deleteById(@RequestParam(value="id")int id){
+    @RequestMapping(method = RequestMethod.DELETE, value = "/")
+    public User deleteById(@RequestParam(value = "id") int id) {
         return userService.deleteById(id);
     }
 }
