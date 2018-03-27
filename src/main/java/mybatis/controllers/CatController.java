@@ -2,6 +2,7 @@ package mybatis.controllers;
 
 
 
+import mybatis.model.CatFacts.All;
 import mybatis.model.CatFacts.CatRoot;
 import mybatis.model.CatFacts.OnlyFacts;
 import mybatis.services.CatService;
@@ -27,9 +28,15 @@ public class CatController {
         return catService.onlyFacts();
     }
 
-@RequestMapping(method = RequestMethod.POST, value = "/")
-    public OnlyFacts insertCatSummary(@RequestBody OnlyFacts facts) {
-        return catService.insertCatSummary(facts);
+@RequestMapping("/load")
+    public ArrayList<OnlyFacts> insertCatSummary() {
+        ArrayList<OnlyFacts> text = catService.onlyFacts();
+        catService.insertCatSummary(text);
+        return text;
+    }
+    @RequestMapping(method = RequestMethod.POST, value = "/")
+    public OnlyFacts addCF(@RequestBody OnlyFacts fact ) {
+        return catService.addCF(fact);
     }
 
 }

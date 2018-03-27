@@ -47,10 +47,17 @@ public class CatService {
         return objArray;
     }
 
-    public OnlyFacts insertCatSummary(OnlyFacts facts) {
-        catMapper.insertCatFacts(facts);
+    public void insertCatSummary(ArrayList<OnlyFacts> facts) {
 
+        for (OnlyFacts f: facts
+             ) {
+            catMapper.insertCatFacts(f);
+        }
 
-        return facts;
+    }
+
+    public OnlyFacts addCF(OnlyFacts fact) {
+        catMapper.insertCatFacts(fact);
+        return catMapper.getCF(fact.getCat_fact());
     }
 }
