@@ -18,12 +18,7 @@ public class CatService {
     @Autowired
     CatMapper catMapper;
 
-  /*  public CatRoot randomCF(String amount) {
-        String random = "https://cat-fact.herokuapp.com/facts/random?amount=" + amount;
-        CatRoot response = restTemplate.getForObject(random, CatRoot.class);
 
-        return response;
-    }*/
 
     public CatRoot getFacts() {
         String url = "https://cat-fact.herokuapp.com/facts/";
@@ -52,10 +47,10 @@ public class CatService {
         return objArray;
     }
 
-    public OnlyFacts insertCatSummary(OnlyFacts cat_fact) {
-        catMapper.insertCatFacts(cat_fact);
+    public OnlyFacts insertCatSummary(OnlyFacts facts) {
+        catMapper.insertCatFacts(facts);
 
 
-        return cat_fact;
+        return facts;
     }
 }

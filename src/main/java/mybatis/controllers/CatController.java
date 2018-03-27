@@ -28,8 +28,8 @@ public class CatController {
     }
 
 @RequestMapping(method = RequestMethod.POST, value = "/")
-    public OnlyFacts insertCatSummary(@RequestBody OnlyFacts cat_fact) {
-        return catService.insertCatSummary(cat_fact);
+    public OnlyFacts insertCatSummary(@RequestBody OnlyFacts facts) {
+        return catService.insertCatSummary(facts);
     }
 
 }

@@ -9,12 +9,12 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface CatMapper {
 
-    String INSERT_CATFACTS = ("INSERT INTO `mybatis-test`.cat_facts (cat_fact) " +
-            "VALUES (#{cat_facts})");
+    String INSERT_CATFACTS = "INSERT INTO `mybatis-test`.cat_facts (cat_fact) " +
+            "VALUES (#{cat_fact})";
 
 
     @Insert(INSERT_CATFACTS)
-    public int insertCatFacts(OnlyFacts cat_fact);
+    public int insertCatFacts(OnlyFacts facts);
 
 
 }
