@@ -2,7 +2,16 @@ package mybatis.model.CatFacts;
 
 public class OnlyFacts {
 
+    int id;
     String cat_fact;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getCat_fact() {
         return cat_fact;

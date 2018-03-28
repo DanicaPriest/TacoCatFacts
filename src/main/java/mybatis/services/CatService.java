@@ -60,4 +60,14 @@ public class CatService {
         catMapper.insertCatFacts(fact);
         return catMapper.getCF(fact.getCat_fact());
     }
+
+    public OnlyFacts updateCF(OnlyFacts fact) {
+        catMapper.updateCF(fact);
+        return catMapper.getCF(fact.getCat_fact());
+    }
+
+    public OnlyFacts deleteCF(OnlyFacts fact) {
+        catMapper.deleteCF(fact);
+        return catMapper.getCFById(fact.getId());
+    }
 }
