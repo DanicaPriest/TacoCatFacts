@@ -1,7 +1,6 @@
 package mybatis.model.CatFacts;
 
 
-
 public class User {
     String _id;
     Name name;

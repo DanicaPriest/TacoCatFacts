@@ -19,9 +19,9 @@ public class CatService {
     CatMapper catMapper;
 
 
-
     public CatRoot getFacts() {
         String url = "https://cat-fact.herokuapp.com/facts/";
+
         CatRoot all = restTemplate.getForObject(url, CatRoot.class);
 
         return all;
@@ -29,31 +29,20 @@ public class CatService {
 
     public ArrayList<OnlyFacts> onlyFacts() {
         All[] text = getFacts().getAll();
-
         ArrayList<OnlyFacts> objArray = new ArrayList();
 
-
-        for (All a : text
-                ) {
+        for (All a : text) {
             OnlyFacts obj = new OnlyFacts();
             obj.setCat_fact(a.getText());
             objArray.add(obj);
-
-
-
         }
-
-
         return objArray;
     }
 
     public void insertCatSummary(ArrayList<OnlyFacts> facts) {
-
-        for (OnlyFacts f: facts
-             ) {
+        for (OnlyFacts f : facts) {
             catMapper.insertCatFacts(f);
         }
-
     }
 
     public OnlyFacts addCF(OnlyFacts fact) {
