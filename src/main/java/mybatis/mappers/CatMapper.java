@@ -1,7 +1,5 @@
 package mybatis.mappers;
 
-
-import mybatis.model.CatFacts.All;
 import mybatis.model.CatFacts.OnlyFacts;
 import org.apache.ibatis.annotations.*;
 

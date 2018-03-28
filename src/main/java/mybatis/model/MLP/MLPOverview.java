@@ -8,6 +8,15 @@ public class MLPOverview {
     String image;
     int width;
     int height;
+    int isActive;
+
+    public int getIsActive() {
+        return isActive;
+    }
+
+    public void setIsActive(int isActive) {
+        this.isActive = isActive;
+    }
 
     public int getId() {
         return id;

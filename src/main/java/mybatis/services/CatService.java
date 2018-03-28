@@ -39,6 +39,14 @@ public class CatService {
         return objArray;
     }
 
+    public String oneFact() {
+        All[] text = getFacts().getAll();
+        OnlyFacts obj = new OnlyFacts();
+        int randy = (int) (Math.random() * (text.length - 1));
+        obj.setCat_fact(text[randy].getText());
+        return obj.getCat_fact();
+    }
+
     public void insertCatSummary(ArrayList<OnlyFacts> facts) {
         for (OnlyFacts f : facts) {
             catMapper.insertCatFacts(f);

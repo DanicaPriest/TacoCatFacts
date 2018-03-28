@@ -50,7 +50,8 @@ public class UserController {
 
     //Update
     @RequestMapping(method = RequestMethod.PATCH, value = "/")
-    public User updateById(@RequestBody User user) {
+    public User updateById(@RequestBody User user)
+    {
         return userService.updateById(user);
     }
 
