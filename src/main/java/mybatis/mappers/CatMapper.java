@@ -8,11 +8,14 @@ import org.apache.ibatis.annotations.*;
 @Mapper
 public interface CatMapper {
 
+    //CADEN: mapper looks good overall
     String INSERT_CATFACTS = "INSERT INTO `mybatis-test`.cat_facts (cat_fact) " +
             "VALUES (#{cat_fact})";
     String GET_CATFACT = "SELECT * FROM `mybatis-test`.cat_facts where cat_fact = #{cat_fact}";
     String GET_BY_ID = "SELECT * FROM `mybatis-test`.cat_facts where id = #{id}";
     String UPDATE_CATFACT = "UPDATE `mybatis-test`.cat_facts SET cat_fact = #{cat_fact} WHERE id = #{id}";
+    //CADEN: could modify delete statement to change the user to inactive instead completely deleting it from
+    //      the database
     String DELETE_CATFACT = "DELETE FROM `mybatis-test`.cat_facts  WHERE id = #{id}";
 
 

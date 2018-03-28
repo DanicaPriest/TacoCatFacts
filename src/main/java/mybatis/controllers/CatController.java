@@ -17,6 +17,9 @@ public class CatController {
     @Autowired
     CatService catService;
 
+    // CADEN: could use more description above each controller method with purpose, path variables, query parameters,
+    //          request body, return type etc.
+
     //Get
     @RequestMapping("/facts")
     public CatRoot getFacts() {

@@ -19,6 +19,8 @@ public class CatService {
     CatMapper catMapper;
 
 
+    //CADEN: nice job breaking up the methods to specific tasks such as mapping root object, mapping OnlyFacts object,
+    //      and then dealing with the DB.
     public CatRoot getFacts() {
         String url = "https://cat-fact.herokuapp.com/facts/";
 
@@ -55,6 +57,9 @@ public class CatService {
         return catMapper.getCF(fact.getCat_fact());
     }
 
+    //CADEN: i believe that this returns an empty object or nothing at all to the user if the object was successfully
+    //      deleted. changing the delete statement in the mapper would allow that record to still be looked up
+    //      by the .getCFById() method and return a record for the user to see.
     public OnlyFacts deleteCF(OnlyFacts fact) {
         catMapper.deleteCF(fact);
         return catMapper.getCFById(fact.getId());
