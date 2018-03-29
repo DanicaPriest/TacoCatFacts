@@ -1,9 +1,7 @@
 package mybatis.services;
 
 import mybatis.mappers.CatMapper;
-import mybatis.model.CatFacts.All;
-import mybatis.model.CatFacts.CatRoot;
-import mybatis.model.CatFacts.OnlyFacts;
+import mybatis.model.CatFacts.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -45,6 +43,12 @@ public class CatService {
         int randy = (int) (Math.random() * (text.length - 1));
         obj.setCat_fact(text[randy].getText());
         return obj.getCat_fact();
+    }
+    public String catPic(){
+        String url = "http://api.giphy.com/v1/gifs/random?tag=tacocats&rating=g&api_key=HmobnYApZpsQRklgB8mnR19J2mkgcS0R";
+        GiphyRoot newpic = restTemplate.getForObject(url, GiphyRoot.class);
+
+        return newpic.getData().getBitly_url();
     }
 
     public void insertCatSummary(ArrayList<OnlyFacts> facts) {

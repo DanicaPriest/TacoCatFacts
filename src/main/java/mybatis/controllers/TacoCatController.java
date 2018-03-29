@@ -8,17 +8,20 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/tacocat")
+@RequestMapping("/tacocatfacts")
 public class TacoCatController {
 
     @Autowired
     TacoCatService tacoCatService;
 
-    @Autowired
-    CatService catService;
 
     @RequestMapping("/")
-    public TacoRoot getTacoCat(){
+    public TacoRoot getTC(){
         return tacoCatService.getTC();
+    }
+
+    @RequestMapping(value="/tweet")
+    public String createTweet() {
+        return tacoCatService.createTweet(tacoCatService.getTweet());
     }
 }

@@ -40,6 +40,12 @@
             <version>8.0.8-dmr</version>
         </dependency>
 
+        <dependency>
+            <groupId>org.twitter4j</groupId>
+            <artifactId>twitter4j-core</artifactId>
+            <version>[4.0,)</version>
+        </dependency>
+
     </dependencies>
 
     <properties>

@@ -1,12 +1,17 @@
 package mybatis.services;
 
-import mybatis.mappers.CatMapper;
+
 import mybatis.mappers.TacoCatMapper;
-import mybatis.model.CatFacts.OnlyFacts;
 import mybatis.model.TacoCat.TacoRoot;
+import mybatis.model.TacoCat.TacoTwitter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.client.RestTemplate;
+import twitter4j.Status;
+import twitter4j.Twitter;
+import twitter4j.TwitterException;
+import twitter4j.TwitterFactory;
 
 @Service
 public class TacoCatService {
@@ -28,4 +33,32 @@ public class TacoCatService {
 
         return tacocat;
     }
+
+    public String createTweet(String tweet) {
+        Twitter twitter = new TwitterFactory().getInstance();
+        Status status = null;
+        try {
+            status = twitter.updateStatus(tweet);
+        } catch (TwitterException te) {
+            te.printStackTrace();
+            System.out.println("Failed to post tweet: " + te.getMessage());
+            System.exit(-1);
+        }
+        return status.getText();
+    }
+
+    public String getTweet() {
+
+        TacoRoot taco = getTC();
+        StringBuilder tweet = new StringBuilder();
+        tweet.append(taco.getName());
+        tweet.append("  " + taco.getUrl());
+        tweet.append(" CAT FACT: " + taco.getCat_fact());
+        tweet.append(catService.catPic());
+
+        String result = tweet.toString();
+        return result;
+    }
+
+
 }
