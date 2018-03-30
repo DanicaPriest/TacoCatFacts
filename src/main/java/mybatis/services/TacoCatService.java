@@ -24,12 +24,15 @@ public class TacoCatService {
     @Autowired
     CatService catService;
 
+    //maps name, recipe and url to TacoRoot object then adds a random catfact from the catsfacts service
     public TacoRoot getTC() {
 
         String webUrl = "http://taco-randomizer.herokuapp.com/random/?full-taco=true";
 
         TacoRoot tacocat = restTemplate.getForObject(webUrl, TacoRoot.class);
         tacocat.setCat_fact(catService.oneFact());
+        //load the object to the database
+        tacoCatMapper.insertTacocatFacts(tacocat);
 
         return tacocat;
     }
@@ -40,9 +43,7 @@ public class TacoCatService {
         try {
             status = twitter.updateStatus(tweet);
         } catch (TwitterException te) {
-            te.printStackTrace();
             System.out.println("Failed to post tweet: " + te.getMessage());
-            System.exit(-1);
         }
         return status.getText();
     }
@@ -59,6 +60,7 @@ public class TacoCatService {
         String result = tweet.toString();
         return result;
     }
+
 
 
 }

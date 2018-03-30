@@ -45,7 +45,7 @@ public class CatService {
         return obj.getCat_fact();
     }
     public String catPic(){
-        String url = "http://api.giphy.com/v1/gifs/random?tag=tacocats&rating=g&api_key=HmobnYApZpsQRklgB8mnR19J2mkgcS0R";
+        String url = "http://api.giphy.com/v1/gifs/random?tag=cats&rating=g&api_key=HmobnYApZpsQRklgB8mnR19J2mkgcS0R";
         GiphyRoot newpic = restTemplate.getForObject(url, GiphyRoot.class);
 
         return newpic.getData().getBitly_url();
