@@ -7,7 +7,6 @@
     <groupId>org.springframework</groupId>
     <artifactId>tacocat_facts</artifactId>
     <version>0.1.0</version>
-
     <packaging>war</packaging>
 
     <parent>
@@ -48,13 +47,8 @@
             <artifactId>twitter4j-core</artifactId>
             <version>[4.0,)</version>
         </dependency>
-
         
       <!--  <dependency>
-
-
-        <dependency>
- 8be0480cd74b1c900f92fe6cac1142f003d49c16
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-tomcat</artifactId>
             <scope>provided</scope>
