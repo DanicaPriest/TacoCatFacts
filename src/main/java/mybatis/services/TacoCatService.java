@@ -44,6 +44,7 @@ public class TacoCatService {
             status = twitter.updateStatus(tweet);
         } catch (TwitterException te) {
             System.out.println("Failed to post tweet: " + te.getMessage());
+            return "tweet was too long! refresh browser";
         }
         return status.getText();
     }
