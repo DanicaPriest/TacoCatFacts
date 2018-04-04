@@ -2,8 +2,9 @@ package mybatis.services;
 
 
 import mybatis.mappers.TacoCatMapper;
+import mybatis.model.ApiKeyException;
 import mybatis.model.TacoCat.TacoRoot;
-import mybatis.model.TacoCat.TacoTwitter;
+import mybatis.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -61,6 +62,21 @@ public class TacoCatService {
         return result;
     }
 
+    public User addUser(User user) {
+        tacoCatMapper.insertUser(user);
+        return tacoCatMapper.getUser(user.getUser());
 
+    }
 
+    public User getUser(String username) {
+        return tacoCatMapper.getUser(username);
+    }
+    public boolean verify(String username, String apikey){
+        User newUser = tacoCatMapper.getUser(username);
+        String userapi = newUser.getApi_key();
+        if (userapi.contentEquals(apikey)){
+        return true;
+        }
+return false;
+    }
 }

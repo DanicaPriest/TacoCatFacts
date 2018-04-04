@@ -1,6 +1,7 @@
 package mybatis.mappers;
 
 import mybatis.model.CatFacts.OnlyFacts;
+import mybatis.model.User;
 import org.apache.ibatis.annotations.*;
 
 @Mapper
@@ -10,6 +11,7 @@ public interface CatMapper {
             "VALUES (#{cat_fact})";
     String GET_CATFACT = "SELECT * FROM `mybatis-test`.cat_facts where cat_fact = #{cat_fact}";
     String GET_BY_ID = "SELECT * FROM `mybatis-test`.cat_facts where id = #{id}";
+    String GET_USER = "SELECT * FROM `mybatis-test`.user_verify where user = #{user}";
     String UPDATE_CATFACT = "UPDATE `mybatis-test`.cat_facts SET cat_fact = #{cat_fact} WHERE id = #{id}";
     String DELETE_CATFACT = "DELETE FROM `mybatis-test`.cat_facts  WHERE id = #{id}";
 
@@ -28,5 +30,8 @@ public interface CatMapper {
 
     @Delete(DELETE_CATFACT)
     public int deleteCF(OnlyFacts fact);
+
+    @Select(GET_USER)
+    public User getUser(String user);
 
 }
