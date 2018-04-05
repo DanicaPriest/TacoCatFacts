@@ -2,5 +2,7 @@
 *.idea
 *.iml
 target/
+TacoCat_Facts/src/main/resources/application.properties
+TacoCat_Facts/src/main/resources/twitter4j.properties
 
 
