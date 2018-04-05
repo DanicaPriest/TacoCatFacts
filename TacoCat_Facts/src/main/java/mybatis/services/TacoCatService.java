@@ -1,13 +1,12 @@
 package mybatis.services;
 
 
+import mybatis.Exceptions.UserNullException;
 import mybatis.mappers.TacoCatMapper;
-import mybatis.model.ApiKeyException;
 import mybatis.model.TacoCat.TacoRoot;
 import mybatis.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.client.RestTemplate;
 import twitter4j.Status;
 import twitter4j.Twitter;
@@ -43,13 +42,14 @@ public class TacoCatService {
         return tacocat;
     }
 
-    public String createTweet(String tweet) {
+    public String createTweet(String tweet) throws TwitterException {
         Twitter twitter = new TwitterFactory().getInstance();
         Status status = null;
+
         try {
             status = twitter.updateStatus(tweet);
         } catch (TwitterException te) {
-            System.out.println("Failed to post tweet: " + te.getMessage());
+            throw te;
         }
         return status.getText();
     }
@@ -61,9 +61,12 @@ public class TacoCatService {
         tweet.append(taco.getName());
         tweet.append("  " + taco.getUrl());
         tweet.append(" CAT FACT: " + taco.getCat_fact());
-        tweet.append(catService.catPic());
+        if (tweet.toString().length() < 280) {
+            tweet.append(catService.catPic());
+        }
 
         String result = tweet.toString();
+
         return result;
     }
 
@@ -88,12 +91,17 @@ public class TacoCatService {
         return tacoCatMapper.getUser(username);
     }
 
-    public boolean verify(String username, String apikey) {
+    public boolean verify(String username, String apikey) throws UserNullException{
         User newUser = tacoCatMapper.getUser(username);
+        try{newUser.getUser();}
+        catch (Exception e){
+            throw new UserNullException();
+        }
         String userapi = newUser.getApi_key();
         if (userapi.contentEquals(apikey)) {
             return true;
         }
         return false;
     }
+
 }
