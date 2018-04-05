@@ -8,6 +8,8 @@ import mybatis.services.TacoCatService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.NoSuchAlgorithmException;
+
 
 @RestController
 @RequestMapping("/tacocatfacts")
@@ -33,8 +35,8 @@ public class TacoCatController {
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/")
-    public User addUser(@RequestBody User user) {
-        return tacoCatService.addUser(user);
+    public String addUser(@RequestParam (value="user")String username) throws NoSuchAlgorithmException {
+        return tacoCatService.addUser(username);
     }
 
 

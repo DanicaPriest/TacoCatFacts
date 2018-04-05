@@ -14,6 +14,11 @@ import twitter4j.Twitter;
 import twitter4j.TwitterException;
 import twitter4j.TwitterFactory;
 
+import javax.crypto.KeyGenerator;
+import javax.crypto.SecretKey;
+import javax.xml.bind.DatatypeConverter;
+import java.security.NoSuchAlgorithmException;
+
 @Service
 public class TacoCatService {
     @Autowired
@@ -62,21 +67,33 @@ public class TacoCatService {
         return result;
     }
 
-    public User addUser(User user) {
-        tacoCatMapper.insertUser(user);
-        return tacoCatMapper.getUser(user.getUser());
+    public String addUser(String user) throws NoSuchAlgorithmException {
+        //generate api-key
+        KeyGenerator newkey = KeyGenerator.getInstance("AES");
+        newkey.init(128);
+        SecretKey secretKey = newkey.generateKey();
+        byte[] encoded = secretKey.getEncoded();
+        String apikey = DatatypeConverter.printHexBinary(encoded);
+
+        //assign key to user and put in database
+        User newuser = new User();
+        newuser.setApi_key(apikey);
+        newuser.setUser(user);
+        tacoCatMapper.insertUser(newuser);
+        return newuser.getApi_key();
 
     }
 
     public User getUser(String username) {
         return tacoCatMapper.getUser(username);
     }
-    public boolean verify(String username, String apikey){
+
+    public boolean verify(String username, String apikey) {
         User newUser = tacoCatMapper.getUser(username);
         String userapi = newUser.getApi_key();
-        if (userapi.contentEquals(apikey)){
-        return true;
+        if (userapi.contentEquals(apikey)) {
+            return true;
         }
-return false;
+        return false;
     }
 }
