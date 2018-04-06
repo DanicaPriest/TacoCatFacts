@@ -71,12 +71,8 @@ public class TacoCatService {
     }
 
     public String addUser(String user) throws NoSuchAlgorithmException {
-        //generate api-key
-        KeyGenerator newkey = KeyGenerator.getInstance("AES");
-        newkey.init(128);
-        SecretKey secretKey = newkey.generateKey();
-        byte[] encoded = secretKey.getEncoded();
-        String apikey = DatatypeConverter.printHexBinary(encoded);
+
+        String apikey = generateKey();
 
         //assign key to user and put in database
         User newuser = new User();
@@ -86,15 +82,25 @@ public class TacoCatService {
         return newuser.getApi_key();
 
     }
+    //generate api-key
+    public String generateKey() throws NoSuchAlgorithmException {
+
+        KeyGenerator newkey = KeyGenerator.getInstance("AES");
+        newkey.init(128);
+        SecretKey secretKey = newkey.generateKey();
+        byte[] encoded = secretKey.getEncoded();
+        return DatatypeConverter.printHexBinary(encoded);
+    }
 
     public User getUser(String username) {
         return tacoCatMapper.getUser(username);
     }
 
-    public boolean verify(String username, String apikey) throws UserNullException{
+    public boolean verify(String username, String apikey) throws UserNullException {
         User newUser = tacoCatMapper.getUser(username);
-        try{newUser.getUser();}
-        catch (Exception e){
+        try {
+            newUser.getUser();
+        } catch (Exception e) {
             throw new UserNullException();
         }
         String userapi = newUser.getApi_key();
