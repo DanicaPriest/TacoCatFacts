@@ -1,10 +1,14 @@
 package mybatis.Exceptions;
 
+import org.apache.ibatis.exceptions.PersistenceException;
 import org.springframework.http.HttpStatus;
+import org.springframework.jdbc.CannotGetJdbcConnectionException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.NoHandlerFoundException;
 import twitter4j.TwitterException;
+
+import java.sql.SQLException;
 
 @ControllerAdvice
     public class ControllerAdviceClass {
@@ -61,6 +65,14 @@ import twitter4j.TwitterException;
         CustomException error = new CustomException();
         error.setReason("path not found");
         error.setMessage("path " + e.getRequestURL() + " does not exist (don't forget to put a ? in front of user) ");
+        error.setStatus(404);
+        return error;
+    }
+    @ExceptionHandler(PersistenceException.class)
+    public @ResponseBody CustomException handle410(PersistenceException e) {
+        CustomException error = new CustomException();
+        error.setReason("connection not found");
+        error.setMessage(e.getMessage());
         error.setStatus(404);
         return error;
     }
