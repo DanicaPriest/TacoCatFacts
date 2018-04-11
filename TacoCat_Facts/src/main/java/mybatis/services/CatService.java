@@ -17,6 +17,7 @@ public class CatService {
     CatMapper catMapper;
 
 
+    //gets cat facts from the api and maps them to an object
     public CatRoot getFacts() {
         String url = "https://cat-fact.herokuapp.com/facts/";
 
@@ -25,6 +26,7 @@ public class CatService {
         return all;
     }
 
+//creates an arrayList of the facts from the getFacts method
     public ArrayList<OnlyFacts> onlyFacts() {
         All[] text = getFacts().getAll();
         ArrayList<OnlyFacts> objArray = new ArrayList();
@@ -37,20 +39,28 @@ public class CatService {
         return objArray;
     }
 
+    //generates one random fact from the cat fact api
     public String oneFact() {
+
         All[] text = getFacts().getAll();
         OnlyFacts obj = new OnlyFacts();
+        //generates a random number that chooses the index of the cat fact
         int randy = (int) (Math.random() * (text.length - 1));
         obj.setCat_fact(text[randy].getText());
+
         return obj.getCat_fact();
     }
+
+    //gets a url from a random cat gif from the Giphy api
     public String catPic(){
+
         String url = "http://api.giphy.com/v1/gifs/random?tag=cats&rating=g&api_key=HmobnYApZpsQRklgB8mnR19J2mkgcS0R";
         GiphyRoot newpic = restTemplate.getForObject(url, GiphyRoot.class);
 
         return newpic.getData().getBitly_url();
     }
 
+    //inserts cat facts into a database
     public void insertCatSummary(ArrayList<OnlyFacts> facts) {
         for (OnlyFacts f : facts) {
             catMapper.insertCatFacts(f);

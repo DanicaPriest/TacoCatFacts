@@ -1,6 +1,6 @@
 package mybatis.mappers;
 
-import mybatis.model.CatFacts.OnlyFacts;
+
 import mybatis.model.TacoCat.TacoRoot;
 import mybatis.model.User;
 import org.apache.ibatis.annotations.*;

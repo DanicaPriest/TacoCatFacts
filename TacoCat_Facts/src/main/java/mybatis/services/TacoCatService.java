@@ -42,6 +42,7 @@ public class TacoCatService {
         return tacocat;
     }
 
+    //creates a tweet and posts it to twitter using twitter4j class methods
     public String createTweet(String tweet) throws TwitterException {
         Twitter twitter = new TwitterFactory().getInstance();
         Status status = null;
@@ -54,6 +55,7 @@ public class TacoCatService {
         return status.getText();
     }
 
+    //takes data from getTC() method and builds a String with stringbuilder that will be passed to createTweet()
     public String getTweet() {
 
         TacoRoot taco = getTC();
@@ -61,6 +63,8 @@ public class TacoCatService {
         tweet.append(taco.getName());
         tweet.append("  " + taco.getUrl());
         tweet.append(" CAT FACT: " + taco.getCat_fact());
+        //checks if the tweet is larger than the character limit and adds a cat gif from the Giphy api
+        //(it would have been a taco cat gif but 80% of those were of some stupid band called tacocat)
         if (tweet.toString().length() < 280) {
             tweet.append(catService.catPic());
         }
@@ -70,18 +74,22 @@ public class TacoCatService {
         return result;
     }
 
+    //creates a new user object, generates an api key for the user then adds both to the database
     public String addUser(String user) throws NoSuchAlgorithmException {
 
         String apikey = generateKey();
 
-        //assign key to user and put in database
+        //assign key to user
         User newuser = new User();
         newuser.setApi_key(apikey);
         newuser.setUser(user);
+        //adds new user to database
         tacoCatMapper.insertUser(newuser);
+
         return newuser.getApi_key();
 
     }
+
     //generate api-key
     public String generateKey() throws NoSuchAlgorithmException {
 
@@ -89,20 +97,27 @@ public class TacoCatService {
         newkey.init(128);
         SecretKey secretKey = newkey.generateKey();
         byte[] encoded = secretKey.getEncoded();
+
         return DatatypeConverter.printHexBinary(encoded);
     }
 
+    //gets user by username
     public User getUser(String username) {
+
         return tacoCatMapper.getUser(username);
     }
 
+    //checks if the user exists and  has a valid api key
     public boolean verify(String username, String apikey) throws UserNullException {
+
         User newUser = tacoCatMapper.getUser(username);
+        //checks if user exists and if not throws a custom exception
         try {
             newUser.getUser();
         } catch (Exception e) {
             throw new UserNullException();
         }
+        //checks if api-key matches the key for that user
         String userapi = newUser.getApi_key();
         if (userapi.contentEquals(apikey)) {
             return true;
