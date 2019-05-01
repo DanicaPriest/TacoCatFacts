@@ -1,13 +1,35 @@
 package mybatis.model.CatFacts;
 
 public class CatRoot {
-    All[] all;
+    int id;
+    String fact;
+    int length;
 
-    public All[] getAll() {
-        return all;
+    public int getId() {
+        return id;
     }
 
-    public void setAll(All[] all) {
-        this.all = all;
+    public void setId(int id) {
+        this.id = id;
     }
+
+
+    public String getFact() {
+        return fact;
+    }
+
+    public void setFact(String fact) {
+        this.fact = fact;
+    }
+
+
+    public int getLength() {
+        return length;
+    }
+
+    public void setLength(int length) {
+        this.length = length;
+    }
+
+
 }

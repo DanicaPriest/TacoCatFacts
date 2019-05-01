@@ -6,8 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.ArrayList;
-
 @Service
 public class CatService {
     @Autowired
@@ -17,39 +15,27 @@ public class CatService {
     CatMapper catMapper;
 
 
-    //gets cat facts from the api and maps them to an object
-    public CatRoot getFacts() {
-        String url = "https://cat-fact.herokuapp.com/facts/";
+    //gets a random cat fact from the api and maps it to an object
+    public CatRoot getCatFactObj() {
+        String url = "https://catfact.ninja/fact";
 
         CatRoot all = restTemplate.getForObject(url, CatRoot.class);
 
         return all;
     }
 
-//creates an arrayList of the facts from the getFacts method
-    public ArrayList<OnlyFacts> onlyFacts() {
-        All[] text = getFacts().getAll();
-        ArrayList<OnlyFacts> objArray = new ArrayList();
+    //gets a random cat fact from the api and returns the fact as a String
+    public String getCatFact() {
+        String url = "https://catfact.ninja/fact";
 
-        for (All a : text) {
-            OnlyFacts obj = new OnlyFacts();
-            obj.setCat_fact(a.getText());
-            objArray.add(obj);
-        }
-        return objArray;
+        CatRoot all = restTemplate.getForObject(url, CatRoot.class);
+        String catFact = all.getFact();
+
+        return catFact;
     }
 
-    //generates one random fact from the cat fact api
-    public String oneFact() {
 
-        All[] text = getFacts().getAll();
-        OnlyFacts obj = new OnlyFacts();
-        //generates a random number that chooses the index of the cat fact
-        int randy = (int) (Math.random() * (text.length - 1));
-        obj.setCat_fact(text[randy].getText());
 
-        return obj.getCat_fact();
-    }
 
     //gets a url from a random cat gif from the Giphy api
     public String catPic(){
@@ -61,23 +47,22 @@ public class CatService {
     }
 
     //inserts cat facts into a database
-    public void insertCatSummary(ArrayList<OnlyFacts> facts) {
-        for (OnlyFacts f : facts) {
-            catMapper.insertCatFacts(f);
-        }
+    public void insertCatSummary(CatRoot fact) {
+
+            catMapper.insertCatFacts(fact);
     }
 
-    public OnlyFacts addCF(OnlyFacts fact) {
+    public CatRoot addCF(CatRoot fact) {
         catMapper.insertCatFacts(fact);
-        return catMapper.getCF(fact.getCat_fact());
+        return catMapper.getCF(fact.getFact());
     }
 
-    public OnlyFacts updateCF(OnlyFacts fact) {
+    public CatRoot updateCF(CatRoot fact) {
         catMapper.updateCF(fact);
-        return catMapper.getCF(fact.getCat_fact());
+        return catMapper.getCF(fact.getFact());
     }
 
-    public OnlyFacts deleteCF(OnlyFacts fact) {
+    public CatRoot deleteCF(CatRoot fact) {
         catMapper.deleteCF(fact);
         return catMapper.getCFById(fact.getId());
     }
