@@ -35,7 +35,7 @@ public class TacoCatService {
         String webUrl = "http://taco-randomizer.herokuapp.com/random/?full-taco=true";
 
         TacoRoot tacocat = restTemplate.getForObject(webUrl, TacoRoot.class);
-        tacocat.setCat_fact(catService.oneFact());
+        tacocat.setCat_fact(catService.getCatFact());
         //load the object to the database
         tacoCatMapper.insertTacocatFacts(tacocat);
 

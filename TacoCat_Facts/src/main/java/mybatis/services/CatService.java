@@ -6,8 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.ArrayList;
-
 @Service
 public class CatService {
     @Autowired
@@ -17,8 +15,8 @@ public class CatService {
     CatMapper catMapper;
 
 
-    //gets cat facts from the api and maps them to an object
-    public CatRoot getFact() {
+    //gets a random cat fact from the api and maps it to an object
+    public CatRoot getCatFactObj() {
         String url = "https://catfact.ninja/fact";
 
         CatRoot all = restTemplate.getForObject(url, CatRoot.class);
@@ -26,28 +24,18 @@ public class CatService {
         return all;
     }
 
-//creates an arrayList of the facts from the getFacts method
-    public ArrayList<OnlyFacts> onlyFacts() {
-        All[] text = getFacts().getAll();
-        ArrayList<OnlyFacts> objArray = new ArrayList();
-
-        for (All a : text) {
-            OnlyFacts obj = new OnlyFacts();
-            obj.setCat_fact(a.getText());
-            objArray.add(obj);
-        }
-        return objArray;
-    }
-
-    //generates one random fact from the cat fact api
-    public String oneFact() {
-
+    //gets a random cat fact from the api and returns the fact as a String
+    public String getCatFact() {
         String url = "https://catfact.ninja/fact";
 
         CatRoot all = restTemplate.getForObject(url, CatRoot.class);
+        String catFact = all.getFact();
 
-        return all;
+        return catFact;
     }
+
+
+
 
     //gets a url from a random cat gif from the Giphy api
     public String catPic(){
@@ -59,23 +47,22 @@ public class CatService {
     }
 
     //inserts cat facts into a database
-    public void insertCatSummary(ArrayList<OnlyFacts> facts) {
-        for (OnlyFacts f : facts) {
-            catMapper.insertCatFacts(f);
-        }
+    public void insertCatSummary(CatRoot fact) {
+
+            catMapper.insertCatFacts(fact);
     }
 
-    public OnlyFacts addCF(OnlyFacts fact) {
+    public CatRoot addCF(CatRoot fact) {
         catMapper.insertCatFacts(fact);
-        return catMapper.getCF(fact.getCat_fact());
+        return catMapper.getCF(fact.getFact());
     }
 
-    public OnlyFacts updateCF(OnlyFacts fact) {
+    public CatRoot updateCF(CatRoot fact) {
         catMapper.updateCF(fact);
-        return catMapper.getCF(fact.getCat_fact());
+        return catMapper.getCF(fact.getFact());
     }
 
-    public OnlyFacts deleteCF(OnlyFacts fact) {
+    public CatRoot deleteCF(CatRoot fact) {
         catMapper.deleteCF(fact);
         return catMapper.getCFById(fact.getId());
     }

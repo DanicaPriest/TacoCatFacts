@@ -4,7 +4,6 @@ package mybatis.controllers;
 import mybatis.Exceptions.ApiKeyException;
 import mybatis.Exceptions.UserNullException;
 import mybatis.model.CatFacts.CatRoot;
-import mybatis.model.CatFacts.OnlyFacts;
 import mybatis.services.CatService;
 import mybatis.services.TacoCatService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,18 +22,18 @@ public class CatController {
     TacoCatService tacoCatService;
 
     //Get
-    @RequestMapping("/facts")
+    @RequestMapping("/")
     public CatRoot getFacts(@RequestParam (value="user")String user,
                             @RequestParam(value="api-key")String key) throws ApiKeyException, UserNullException {
         if(tacoCatService.verify(user, key)){
-        return catService.getFacts();} throw new ApiKeyException();
+        return catService.getCatFactObj();} throw new ApiKeyException();
     }
 
     //Put
     @RequestMapping("/load")
-    public ArrayList<OnlyFacts> insertCatSummary(@RequestParam (value="user")String user,
+    public CatRoot insertCatSummary(@RequestParam (value="user")String user,
                                                  @RequestParam(value="api-key")String key) throws ApiKeyException, UserNullException {
-        ArrayList<OnlyFacts> text = catService.onlyFacts();
+        CatRoot text = catService.getCatFactObj();
         if (tacoCatService.verify(user, key)){
         catService.insertCatSummary(text);
         return text;} throw new ApiKeyException();
@@ -42,33 +41,33 @@ public class CatController {
 
     //Create
     @RequestMapping(method = RequestMethod.POST, value = "/")
-    public OnlyFacts addCF(@RequestParam (value="user")String user,
+    public CatRoot addCF(@RequestParam (value="user")String user,
                            @RequestParam(value="api-key")String key,
-                           @RequestBody OnlyFacts fact) throws ApiKeyException, UserNullException {
+                           @RequestBody CatRoot fact) throws ApiKeyException, UserNullException {
         if (tacoCatService.verify(user, key)){
         return catService.addCF(fact);} throw new ApiKeyException();
     }
 
     //Read
-    @RequestMapping("/onlyfacts")
-    public ArrayList<OnlyFacts> onlyFacts(@RequestParam (value="user")String user,
+    @RequestMapping("/catfact")
+    public String onlyFacts(@RequestParam (value="user")String user,
                                           @RequestParam(value="api-key")String key) throws ApiKeyException, UserNullException {
         if (tacoCatService.verify(user, key)){
-        return catService.onlyFacts();} throw new ApiKeyException();
+        return catService.getCatFact();} throw new ApiKeyException();
     }
 
     //Update
     @RequestMapping(method = RequestMethod.PATCH, value = "/")
-    public OnlyFacts updateCF(@RequestParam (value="user")String user, @RequestParam(value="api-key")String key,
-                              @RequestBody OnlyFacts fact) throws ApiKeyException, UserNullException {
+    public CatRoot updateCF(@RequestParam (value="user")String user, @RequestParam(value="api-key")String key,
+                              @RequestBody CatRoot fact) throws ApiKeyException, UserNullException {
         if (tacoCatService.verify(user, key)){
         return catService.updateCF(fact);} throw new ApiKeyException();
     }
 
     //Delete
     @RequestMapping(method = RequestMethod.DELETE, value = "/")
-    public OnlyFacts deleteCF(@RequestParam (value="user")String user, @RequestParam(value="api-key")String key,
-                              @RequestBody OnlyFacts fact) throws ApiKeyException, UserNullException {
+    public CatRoot deleteCF(@RequestParam (value="user")String user, @RequestParam(value="api-key")String key,
+                              @RequestBody CatRoot fact) throws ApiKeyException, UserNullException {
         if (tacoCatService.verify(user, key)){
         return catService.deleteCF(fact);} throw  new ApiKeyException();
     }
