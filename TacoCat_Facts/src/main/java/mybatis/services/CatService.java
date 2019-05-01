@@ -18,8 +18,8 @@ public class CatService {
 
 
     //gets cat facts from the api and maps them to an object
-    public CatRoot getFacts() {
-        String url = "https://cat-fact.herokuapp.com/facts/";
+    public CatRoot getFact() {
+        String url = "https://catfact.ninja/fact";
 
         CatRoot all = restTemplate.getForObject(url, CatRoot.class);
 
@@ -42,13 +42,11 @@ public class CatService {
     //generates one random fact from the cat fact api
     public String oneFact() {
 
-        All[] text = getFacts().getAll();
-        OnlyFacts obj = new OnlyFacts();
-        //generates a random number that chooses the index of the cat fact
-        int randy = (int) (Math.random() * (text.length - 1));
-        obj.setCat_fact(text[randy].getText());
+        String url = "https://catfact.ninja/fact";
 
-        return obj.getCat_fact();
+        CatRoot all = restTemplate.getForObject(url, CatRoot.class);
+
+        return all;
     }
 
     //gets a url from a random cat gif from the Giphy api
